@@ -104,6 +104,52 @@
   .hero{
     padding:96px 0 72px;
   }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr 260px;
+    gap:24px;
+    align-items:stretch;
+  }
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-photo{order:-1;max-width:220px;margin:0 auto;}
+  }
+  .hero-photo{
+    position:relative;
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid var(--line-bright);
+    background:var(--bg-panel);
+    box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 30px 80px -30px rgba(0,0,0,.8);
+  }
+  .hero-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter:grayscale(15%) contrast(1.08) brightness(0.94);
+  }
+  .hero-photo::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(255,182,39,0.12) 0%, transparent 30%, transparent 70%, rgba(10,13,10,0.55) 100%);
+    pointer-events:none;
+  }
+  .hero-photo .tag-badge{
+    position:absolute;
+    bottom:10px;
+    left:10px;
+    z-index:2;
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--amber);
+    background:rgba(10,13,10,0.75);
+    border:1px solid var(--line-bright);
+    padding:4px 8px;
+    border-radius:4px;
+    letter-spacing:.03em;
+  }
   .terminal{
     background:var(--bg-panel);
     border:1px solid var(--line-bright);
@@ -523,30 +569,36 @@
 
   <!-- HERO -->
   <section class="hero" style="border-top:none;padding-top:64px;">
-    <div class="terminal">
-      <div class="terminal-bar">
-        <div class="btns"><span></span><span></span><span></span></div>
-        <div class="title">kierwin@systems-eng: ~</div>
+    <div class="hero-grid">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="btns"><span></span><span></span><span></span></div>
+          <div class="title">kierwin@systems-eng: ~</div>
+        </div>
+        <div class="terminal-body">
+          <div class="line"><span class="prompt">$</span> <span class="out">whoami</span></div>
+          <h1>KIERWIN D. <span class="amber">RAMOS</span><span class="cursor"></span></h1>
+          <div class="role-line">Systems Engineer — <strong>full-stack development</strong>, automation & <strong>AI-augmented engineering</strong></div>
+          <div class="line"><span class="prompt">$</span> <span class="out">cat status.log</span></div>
+          <div class="line" style="margin-top:4px;">→ based in Laguna, Philippines · open to freelance & full-time roles</div>
+          <div class="hero-tags">
+            <span class="tag">C#.NET</span>
+            <span class="tag">PHP</span>
+            <span class="tag">Python</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Linux Shell</span>
+            <span class="tag">AI-Assisted Dev</span>
+          </div>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">view deployed work →</a>
+            <a href="#contact" class="btn btn-ghost">get in touch</a>
+          </div>
+        </div>
       </div>
-      <div class="terminal-body">
-        <div class="line"><span class="prompt">$</span> <span class="out">whoami</span></div>
-        <h1>KIERWIN D. <span class="amber">RAMOS</span><span class="cursor"></span></h1>
-        <div class="role-line">Systems Engineer — <strong>full-stack development</strong>, automation & <strong>AI-augmented engineering</strong></div>
-        <div class="line"><span class="prompt">$</span> <span class="out">cat status.log</span></div>
-        <div class="line" style="margin-top:4px;">→ based in Laguna, Philippines · open to freelance & full-time roles</div>
-        <div class="hero-tags">
-          <span class="tag">C#.NET</span>
-          <span class="tag">PHP</span>
-          <span class="tag">Python</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">SQL</span>
-          <span class="tag">Linux Shell</span>
-          <span class="tag">AI-Assisted Dev</span>
-        </div>
-        <div class="hero-cta">
-          <a href="#projects" class="btn btn-primary">view deployed work →</a>
-          <a href="#contact" class="btn btn-ghost">get in touch</a>
-        </div>
+      <div class="hero-photo">
+        <img src="profile.jpg" alt="Kierwin D. Ramos, Systems Engineer">
+        <span class="tag-badge">● online</span>
       </div>
     </div>
   </section>
@@ -773,9 +825,9 @@
       <div style="font-family:var(--font-mono);color:var(--amber);font-size:13px;">$ mail --compose</div>
       <p>Open to freelance projects, contract work, and full-time systems / full-stack engineering roles. Reach out below.</p>
       <div class="contact-links">
-        <a class="btn btn-primary" href="mailto:kierwinramos28@gmail.com">email me</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/kierwin-ramos-5992a41a2/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/Denox9" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" href="mailto:your.email@example.com">email me</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/your-username" target="_blank" rel="noopener">GitHub</a>
       </div>
       <div class="note">⚠ placeholder links above — swap in your real email, LinkedIn, and GitHub before publishing</div>
     </div>
