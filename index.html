@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kierwin D. Ramos — Systems Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void:#0a0d0a;
+    --bg-panel:#101513;
+    --bg-panel-raised:#151b18;
+    --line:#1f2a24;
+    --line-bright:#2c3a32;
+    --amber:#ffb627;
+    --amber-dim:#8a6a2a;
+    --teal:#3ddcc4;
+    --text:#e4e8e3;
+    --text-muted:#7c8a80;
+    --text-dim:#4d5850;
+    --danger:#ff6b5e;
+    --font-mono:'IBM Plex Mono', ui-monospace, monospace;
+    --font-sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg-void);
+    color:var(--text);
+    font-family:var(--font-sans);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    background-position:-1px -1px;
+    background-attachment:fixed;
+  }
+
+  ::selection{background:var(--amber);color:var(--bg-void);}
+
+  a{color:inherit;text-decoration:none;}
+
+  :focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:960px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(10,13,10,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:960px;
+    margin:0 auto;
+    padding:16px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:var(--font-mono);
+    font-size:13px;
+  }
+  .nav-brand{
+    color:var(--amber);
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .nav-brand .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 8px var(--amber);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  .nav-links{display:flex;gap:22px;}
+  .nav-links a{color:var(--text-muted);transition:color .15s;}
+  .nav-links a:hover{color:var(--teal);}
+  @media (max-width:640px){ .nav-links{display:none;} }
+
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:.35;}
+  }
+
+  /* ---------- HERO / TERMINAL BOOT ---------- */
+  .hero{
+    padding:96px 0 72px;
+  }
+  .terminal{
+    background:var(--bg-panel);
+    border:1px solid var(--line-bright);
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 30px 80px -30px rgba(0,0,0,.8);
+  }
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    background:var(--bg-panel-raised);
+    border-bottom:1px solid var(--line);
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--text-dim);
+  }
+  .terminal-bar .btns{display:flex;gap:6px;}
+  .terminal-bar .btns span{width:10px;height:10px;border-radius:50%;background:var(--line-bright);}
+  .terminal-bar .title{margin-left:6px;}
+  .terminal-body{
+    padding:28px 24px 32px;
+    font-family:var(--font-mono);
+    font-size:14px;
+  }
+  .terminal-body .line{margin-bottom:6px;color:var(--text-muted);}
+  .terminal-body .prompt{color:var(--teal);}
+  .terminal-body .out{color:var(--text);}
+  .terminal-body h1{
+    font-family:var(--font-mono);
+    font-size:clamp(28px,5vw,46px);
+    font-weight:700;
+    color:var(--text);
+    margin:14px 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .terminal-body h1 .amber{color:var(--amber);}
+  .role-line{
+    color:var(--text-muted);
+    font-size:16px;
+    margin-bottom:18px;
+  }
+  .role-line strong{color:var(--teal);font-weight:600;}
+  .cursor{
+    display:inline-block;
+    width:9px;height:18px;
+    background:var(--amber);
+    vertical-align:middle;
+    margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:22px;
+  }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    padding:5px 10px;
+    border:1px solid var(--line-bright);
+    border-radius:4px;
+    color:var(--text-muted);
+    background:var(--bg-void);
+  }
+
+  .hero-cta{
+    display:flex;
+    gap:12px;
+    margin-top:26px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--font-mono);
+    font-size:13px;
+    padding:11px 18px;
+    border-radius:5px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .12s ease, border-color .12s ease, background .12s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-primary{
+    background:var(--amber);
+    color:#1a1204;
+    font-weight:600;
+  }
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(255,182,39,.5);}
+  .btn-ghost{
+    background:transparent;
+    color:var(--text);
+    border-color:var(--line-bright);
+  }
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:64px 0;border-top:1px solid var(--line);}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:34px;
+  }
+  .section-tag{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--amber);
+    white-space:nowrap;
+  }
+  .section-title{
+    font-family:var(--font-mono);
+    font-size:22px;
+    font-weight:700;
+    color:var(--text);
+  }
+  .section-rule{
+    flex:1;
+    height:1px;
+    background:var(--line-bright);
+  }
+  .section-intro{
+    color:var(--text-muted);
+    max-width:640px;
+    margin-bottom:36px;
+    font-size:15px;
+  }
+
+  /* ---------- STATS ---------- */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .stat{
+    background:var(--bg-panel);
+    padding:22px 16px;
+    text-align:center;
+  }
+  .stat .num{
+    font-family:var(--font-mono);
+    font-size:26px;
+    font-weight:700;
+    color:var(--amber);
+  }
+  .stat .lbl{
+    font-size:11px;
+    color:var(--text-muted);
+    margin-top:4px;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+  }
+  @media (max-width:640px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:40px;
+  }
+  .about-grid p{color:var(--text-muted);margin-bottom:14px;font-size:15px;}
+  .about-grid strong{color:var(--text);font-weight:600;}
+  .manifest{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:18px 20px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+  }
+  .manifest .mtitle{color:var(--text-dim);margin-bottom:10px;}
+  .manifest .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line);}
+  .manifest .row:last-child{border-bottom:none;}
+  .manifest .k{color:var(--text-muted);}
+  .manifest .v{color:var(--teal);}
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* ---------- SKILLS ---------- */
+  .skill-manifest{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .skill-row{
+    display:grid;
+    grid-template-columns:190px 1fr;
+    border-bottom:1px solid var(--line);
+  }
+  .skill-row:last-child{border-bottom:none;}
+  .skill-key{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--amber);
+    padding:16px 18px;
+    background:var(--bg-panel-raised);
+    border-right:1px solid var(--line);
+  }
+  .skill-vals{
+    padding:14px 18px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-content:center;
+  }
+  .chip{
+    font-family:var(--font-mono);
+    font-size:12px;
+    padding:5px 10px;
+    background:var(--bg-void);
+    border:1px solid var(--line-bright);
+    border-radius:4px;
+    color:var(--text);
+  }
+  @media (max-width:600px){
+    .skill-row{grid-template-columns:1fr;}
+    .skill-key{border-right:none;border-bottom:1px solid var(--line);}
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{display:flex;flex-direction:column;gap:16px;}
+  .project{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:22px 24px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .project:hover{border-color:var(--line-bright);transform:translateY(-2px);}
+  .project-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .project-name{
+    font-family:var(--font-mono);
+    font-size:17px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .status{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--amber);
+    letter-spacing:.04em;
+  }
+  .status .d{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 6px var(--amber);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  .project-desc{
+    color:var(--text-muted);
+    font-size:14.5px;
+    margin:12px 0 16px;
+    max-width:640px;
+  }
+  .project-foot{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .project-stack{display:flex;gap:6px;flex-wrap:wrap;}
+  .project-link{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--teal);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 14px;
+    border:1px solid var(--line-bright);
+    border-radius:5px;
+    transition:background .15s, color .15s;
+  }
+  .project-link:hover{background:var(--teal);color:#04211c;}
+
+  /* ---------- EXPERIENCE (timeline = real chronology, numbering justified) ---------- */
+  .timeline{
+    position:relative;
+    padding-left:28px;
+    border-left:1px solid var(--line-bright);
+  }
+  .tl-item{
+    position:relative;
+    padding-bottom:34px;
+  }
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:'';
+    position:absolute;
+    left:-33px;
+    top:4px;
+    width:9px;height:9px;
+    border-radius:50%;
+    background:var(--bg-void);
+    border:2px solid var(--amber);
+  }
+  .tl-role{
+    font-family:var(--font-mono);
+    font-size:15px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .tl-org{color:var(--teal);font-size:13.5px;margin-top:2px;}
+  .tl-meta{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin:4px 0 10px;
+  }
+  .tl-desc{color:var(--text-muted);font-size:14px;}
+  .tl-desc li{margin-bottom:6px;margin-left:18px;}
+
+  /* ---------- EDUCATION / AWARDS ---------- */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media (max-width:700px){ .two-col{grid-template-columns:1fr;} }
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:20px 22px;
+  }
+  .card h3{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:var(--amber);
+    margin-bottom:12px;
+  }
+  .edu-item{margin-bottom:14px;}
+  .edu-item:last-child{margin-bottom:0;}
+  .edu-item .school{font-weight:600;font-size:14.5px;color:var(--text);}
+  .edu-item .deg{color:var(--text-muted);font-size:13px;margin-top:2px;}
+  .edu-item .yrs{font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim);margin-top:2px;}
+  .award-list{list-style:none;}
+  .award-list li{
+    display:flex;
+    gap:10px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:13.5px;
+    color:var(--text-muted);
+  }
+  .award-list li:last-child{border-bottom:none;}
+  .award-list .ic{color:var(--amber);}
+
+  /* ---------- CONTACT ---------- */
+  .contact-panel{
+    background:var(--bg-panel);
+    border:1px solid var(--line-bright);
+    border-radius:8px;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .contact-panel p{color:var(--text-muted);max-width:480px;margin:10px auto 24px;}
+  .contact-links{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .note{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:20px;
+  }
+
+  footer{
+    padding:32px 0 50px;
+    text-align:center;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-dim);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><span class="dot"></span> KIERWIN.RAMOS</div>
+    <nav class="nav-links">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#experience">experience</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;padding-top:64px;">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="btns"><span></span><span></span><span></span></div>
+        <div class="title">kierwin@systems-eng: ~</div>
+      </div>
+      <div class="terminal-body">
+        <div class="line"><span class="prompt">$</span> <span class="out">whoami</span></div>
+        <h1>KIERWIN D. <span class="amber">RAMOS</span><span class="cursor"></span></h1>
+        <div class="role-line">Systems Engineer — <strong>full-stack development</strong>, automation & <strong>AI-augmented engineering</strong></div>
+        <div class="line"><span class="prompt">$</span> <span class="out">cat status.log</span></div>
+        <div class="line" style="margin-top:4px;">→ based in Laguna, Philippines · open to freelance & full-time roles</div>
+        <div class="hero-tags">
+          <span class="tag">C#.NET</span>
+          <span class="tag">PHP</span>
+          <span class="tag">Python</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Linux Shell</span>
+          <span class="tag">AI-Assisted Dev</span>
+        </div>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">view deployed work →</a>
+          <a href="#contact" class="btn btn-ghost">get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section style="border-top:none;padding-top:0;padding-bottom:0;">
+    <div class="stats">
+      <div class="stat"><div class="num">3</div><div class="lbl">Live Deployments</div></div>
+      <div class="stat"><div class="num">7+</div><div class="lbl">Languages & Tools</div></div>
+      <div class="stat"><div class="num">4</div><div class="lbl">Engineering Awards</div></div>
+      <div class="stat"><div class="num">2024</div><div class="lbl">BS Comp. Eng. Grad</div></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-head">
+      <span class="section-tag">01</span>
+      <span class="section-title">about</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a <strong>Systems Engineer</strong> currently building and maintaining production software inside a high-volume HDD manufacturing environment at <strong>Toshiba Equipment Information (Phils.) Inc.</strong> — where downtime is measured in cost, and every script has to earn its place on the line.</p>
+        <p>My day-to-day spans <strong>C#.NET, PHP, Python, and JavaScript</strong> for web and desktop tooling, <strong>Linux shell automation</strong> for system monitoring, and <strong>SQL</strong> for real-time production reporting. I lean heavily on <strong>AI-assisted development workflows</strong> — using them to prototype faster, refactor cleaner, and ship business applications without cutting corners on requirements.</p>
+        <p>Outside the factory floor, I build and ship full-stack web products end-to-end — the three below are live, in production, and used by real businesses today.</p>
+      </div>
+      <div class="manifest">
+        <div class="mtitle">// quick facts</div>
+        <div class="row"><span class="k">role</span><span class="v">Systems Engineer</span></div>
+        <div class="row"><span class="k">company</span><span class="v">Toshiba (Phils.) Inc.</span></div>
+        <div class="row"><span class="k">location</span><span class="v">Laguna, PH</span></div>
+        <div class="row"><span class="k">education</span><span class="v">BS Comp. Eng.</span></div>
+        <div class="row"><span class="k">focus</span><span class="v">Full-stack + AI dev</span></div>
+        <div class="row"><span class="k">status</span><span class="v">open to work</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-tag">02</span>
+      <span class="section-title">skills.manifest</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="skill-manifest">
+      <div class="skill-row">
+        <div class="skill-key">languages</div>
+        <div class="skill-vals">
+          <span class="chip">C#.NET</span><span class="chip">PHP</span><span class="chip">JavaScript</span>
+          <span class="chip">Python</span><span class="chip">Java</span><span class="chip">C++</span><span class="chip">SQL</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">ai & dev workflow</div>
+        <div class="skill-vals">
+          <span class="chip">AI-Assisted Development</span><span class="chip">AI Coding Assistants</span>
+          <span class="chip">AI-Augmented Workflows</span><span class="chip">Prompt Engineering</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">automation & systems</div>
+        <div class="skill-vals">
+          <span class="chip">Linux Shell Scripting</span><span class="chip">Process Automation</span>
+          <span class="chip">System Troubleshooting</span><span class="chip">SQL DB Management</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">tools</div>
+        <div class="skill-vals">
+          <span class="chip">Git</span><span class="chip">Visual Studio</span><span class="chip">AI Dev Tools</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">design</div>
+        <div class="skill-vals">
+          <span class="chip">Photoshop</span><span class="chip">Illustrator</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-head">
+      <span class="section-tag">03</span>
+      <span class="section-title">deployed projects</span>
+      <span class="section-rule"></span>
+    </div>
+    <p class="section-intro">Full-stack builds shipped and running in production — built on JavaScript, PHP, and MySQL, from brand storefront to internal finance tooling.</p>
+
+    <div class="projects">
+
+      <div class="project">
+        <div class="project-top">
+          <div class="project-name">EDX Decals</div>
+          <div class="status"><span class="d"></span>LIVE</div>
+        </div>
+        <p class="project-desc">Custom vinyl decal storefront for motors, cars, and helmets — bold stickers and clean finishes made to look instantly sharper. Built as a full brand + e-commerce experience.</p>
+        <div class="project-foot">
+          <div class="project-stack">
+            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span>
+          </div>
+          <a class="project-link" href="https://denox-co.synergize.co/edx.decals/" target="_blank" rel="noopener">visit live site →</a>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-top">
+          <div class="project-name">ESTRELLE</div>
+          <div class="status"><span class="d"></span>LIVE</div>
+        </div>
+        <p class="project-desc">Classy custom bag brand for modern women — moss green, terracotta, and graceful everyday luxury, shaped into a full product catalog and storefront.</p>
+        <div class="project-foot">
+          <div class="project-stack">
+            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span>
+          </div>
+          <a class="project-link" href="http://denox-co.synergize.co/edx.estrelle/" target="_blank" rel="noopener">visit live site →</a>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-top">
+          <div class="project-name">FINANCE</div>
+          <div class="status"><span class="d"></span>LIVE</div>
+        </div>
+        <p class="project-desc">Personal finance manager for handling income, savings, debt, and budget in one place — built to make everyday money management effortless.</p>
+        <div class="project-foot">
+          <div class="project-stack">
+            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span>
+          </div>
+          <a class="project-link" href="https://denox-co.synergize.co/edx.finance" target="_blank" rel="noopener">visit live site →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-head">
+      <span class="section-tag">04</span>
+      <span class="section-title">experience.log</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-role">Systems Engineer</div>
+        <div class="tl-org">Toshiba Equipment Information (Phils.) Inc.</div>
+        <div class="tl-meta">Nov 2024 — Present · Laguna, Philippines</div>
+        <ul class="tl-desc">
+          <li>Engineer and maintain web and desktop applications using C#.NET, PHP, and JavaScript to automate critical HDD manufacturing workflows.</li>
+          <li>Develop and deploy Python scripts and Linux shell automation tools to enhance system monitoring and drive production cost reductions.</li>
+          <li>Leverage AI-assisted development tools to accelerate development, debugging, code generation, refactoring, and documentation.</li>
+          <li>Conduct root-cause analysis and implement fixes for production software, minimizing downtime through expert troubleshooting.</li>
+          <li>Manage and optimize SQL databases to ensure high availability and data integrity for real-time production reporting.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-role">QA Engineer (OJT)</div>
+        <div class="tl-org">LCCTVMPC</div>
+        <div class="tl-meta">Feb 2024 — May 2024 · San Pablo, Laguna</div>
+        <ul class="tl-desc">
+          <li>Performed comprehensive testing of products and equipment to verify compliance with safety and performance standards.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-role">IT Support</div>
+        <div class="tl-org">Management Information Office</div>
+        <div class="tl-meta">Aug 2018 — Sep 2018 · Laguna, Philippines</div>
+        <ul class="tl-desc">
+          <li>Provided technical infrastructure support and designed professional graphics for the Provincial Government of Laguna.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION & AWARDS -->
+  <section id="education">
+    <div class="section-head">
+      <span class="section-tag">05</span>
+      <span class="section-title">education & awards</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <h3>// education</h3>
+        <div class="edu-item">
+          <div class="school">Laguna State Polytechnic University</div>
+          <div class="deg">BS Computer Engineering — Best in Research Award</div>
+          <div class="yrs">2019 — 2024</div>
+        </div>
+        <div class="edu-item">
+          <div class="school">ACTS Computer College</div>
+          <div class="deg">TVL: Information Communication & Technology — With Honors & Conduct Award</div>
+          <div class="yrs">2017 — 2019</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>// awards</h3>
+        <ul class="award-list">
+          <li><span class="ic">▸</span> Kaizen Award — Toshiba, 2025</li>
+          <li><span class="ic">▸</span> Best Engineer Award — Toshiba</li>
+          <li><span class="ic">▸</span> Bright Program Award — Toshiba</li>
+          <li><span class="ic">▸</span> Best in Research Award — LSPU</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-head">
+      <span class="section-tag">06</span>
+      <span class="section-title">contact</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="contact-panel">
+      <div style="font-family:var(--font-mono);color:var(--amber);font-size:13px;">$ mail --compose</div>
+      <p>Open to freelance projects, contract work, and full-time systems / full-stack engineering roles. Reach out below.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:kierwinramos28@gmail.com">email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/kierwin-ramos-5992a41a2/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/Denox9" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="note">⚠ placeholder links above — swap in your real email, LinkedIn, and GitHub before publishing</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Kierwin D. Ramos · built with care · Laguna, Philippines
+</footer>
+
+</body>
+</html>
