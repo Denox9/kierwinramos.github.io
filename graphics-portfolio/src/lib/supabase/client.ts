@@ -1,0 +1,7 @@
+// Browser client (admin uploads). RLS enforces admin-only writes.
+import { createBrowserClient } from "@supabase/ssr";
+import { SUPABASE_KEY, SUPABASE_URL } from "./env";
+
+export function createClient() {
+  return createBrowserClient(SUPABASE_URL, SUPABASE_KEY);
+}
