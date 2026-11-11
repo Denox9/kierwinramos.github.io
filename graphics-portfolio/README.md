@@ -1,6 +1,6 @@
 # RX DESIGN ARCHIVE — Graphic Design Portfolio
 
-`NEXT.JS 15 · REACT 19 · SUPABASE · VERCEL` — RX-09 Industrial HUD, Mode A.
+`NEXT.JS 15 · REACT 19 · SUPABASE · VERCEL` — redesigned on the **SIKLAB/68** Swiss-constructivist system (one red, Baybayin, 90% scale).
 
 A public portfolio for presentations, logos, infographics and brand systems, plus a private
 **/admin control panel** where you upload designs. You never have to touch code to publish new work.
@@ -97,22 +97,34 @@ src/lib/categories.ts        categories, code prefixes, Baybayin tags
 src/lib/data.ts              public queries (falls back to demo data)
 src/lib/supabase/*           browser / server / public clients
 src/app/                     pages + /api/revalidate + /auth/signout
-src/components/              Header, Footer, ProjectCard, WorkFilter, HUD parts
+src/components/              Header, Footer, ProjectCard, WorkFilter, SecHead, BbCols, PixelArt, ModeSwitches, HudGauge
 src/components/admin/ProjectForm.tsx   upload / edit form
-src/app/globals.css          RX-09 tokens + all styles
+src/app/globals.css          SIKLAB/68 tokens + all styles (rem, 90% scale)
 ```
 
-## BAYBAYIN + NIGHT MODE
+## DESIGN — SIKLAB/68 (REDESIGN)
 
-- All decorative script is **Baybayin** via the RX09 Baybayin font (`public/fonts/`, SIL OFL 1.1),
-  scoped with `unicode-range` so it only affects U+1700 characters.
-- Write Latin, get Baybayin: `<Bb text="babala" bold />` (font) or `<BbSvg text="Kierwin" height={44} />`
-  (pure vector, server-only). Engine: `src/lib/baybayin.ts`.
-- Category tags live in `src/lib/categories.ts` (`bb: "pahayag"` etc.). Your hero signature uses
-  `baybayinName` in `src/lib/site.ts`.
-- **Night mode:** `[DAY | NIGHT]` switch in the header. Follows the OS theme until you choose; the choice
-  is saved in `localStorage` and applied before first paint (no flash). Tokens: `[data-theme="dark"]` in
-  `globals.css`. Orange stays the single accent; text on orange is always black for contrast.
+- **Tokens + components:** `src/app/globals.css` (Siklab core + a Next layer). Paper `#F2F0EB`, ink `#0B0B0B`,
+  one red `#E3171E`; dark mode uses softened near-black `#121211` (ink on paper 15.46:1).
+- **Type:** Inter Tight (mega headlines/body), Archivo wdth 62–125 (wide + condensed numerals), Space Mono (labels) via `next/font`.
+- **Structure:** sticky top nav with indexed links → cover plate (mega title, red block, pixel mosaic, stripes,
+  vertical Baybayin, HUD readouts) → ticker → numbered sections (`<SecHead>`: red numeral, soft/strong title,
+  vertical side label, Baybayin ghost) → red contact block → 3-column footer with barcode.
+- **New components:** `SecHead`, `BbCols` (vertical Baybayin), `PixelArt`, `ModeSwitches` (replaces `ThemeToggle`).
+  `HudGauge` is now the Siklab half-dial.
+- **Admin + upload form:** class names and logic unchanged — restyled through the CSS layer only.
+
+## MODES + 90% SCALE
+
+- `[ARAW|GABI]` theme · `[A·PULA|B·MONO]` accent · `[90%|100%]` scale — all in the top nav.
+- Applied before first paint by `src/lib/theme-script.ts` (`rx-theme`, `rx-accent`, `rx-scale` in localStorage) and
+  painted by CSS from `<html data-*>`, so the switches are correct before hydration.
+- Every size is `rem`; `html{font-size:calc(100% * var(--s))}` with `--s:.9` (default) or `1` (100% / large text).
+
+## BAYBAYIN
+
+- **SKB Baybayin** (`public/fonts/rx09-baybayin-*.woff2`, SIL OFL 1.1), scoped with unicode-range to U+1700.
+- Write Latin, get Baybayin: `<Bb text="babala" bold />`, `<BbSvg text="Kierwin" height={44} />`, `<BbCols lines={["likha","sining"]} />`.
 
 ## SECURITY MODEL
 

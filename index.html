@@ -1,842 +1,326 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-accent="pula" data-scale="90">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kierwin D. Ramos — Systems Engineer</title>
+<meta name="description" content="Kierwin D. Ramos — Systems Engineer: full-stack development, automation and AI-augmented engineering. Laguna, Philippines.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F0EB">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121211">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<!-- Theme / accent / scale applied before first paint (no flash) -->
+<script>
+(function(){var d=document.documentElement,ls=null;try{ls=window.localStorage}catch(e){}
+var sys=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+d.setAttribute("data-theme",(ls&&ls.getItem("skb_theme"))||sys);
+d.setAttribute("data-accent",(ls&&ls.getItem("skb_accent"))||"pula");
+d.setAttribute("data-scale",(ls&&ls.getItem("skb_scale"))||"90");})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-void:#0a0d0a;
-    --bg-panel:#101513;
-    --bg-panel-raised:#151b18;
-    --line:#1f2a24;
-    --line-bright:#2c3a32;
-    --amber:#ffb627;
-    --amber-dim:#8a6a2a;
-    --teal:#3ddcc4;
-    --text:#e4e8e3;
-    --text-muted:#7c8a80;
-    --text-dim:#4d5850;
-    --danger:#ff6b5e;
-    --font-mono:'IBM Plex Mono', ui-monospace, monospace;
-    --font-sans:'IBM Plex Sans', system-ui, sans-serif;
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-
-  html{scroll-behavior:smooth;}
-
-  body{
-    background:var(--bg-void);
-    color:var(--text);
-    font-family:var(--font-sans);
-    line-height:1.6;
-    overflow-x:hidden;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:64px 64px;
-    background-position:-1px -1px;
-    background-attachment:fixed;
-  }
-
-  ::selection{background:var(--amber);color:var(--bg-void);}
-
-  a{color:inherit;text-decoration:none;}
-
-  :focus-visible{
-    outline:2px solid var(--teal);
-    outline-offset:3px;
-  }
-
-  .wrap{
-    max-width:960px;
-    margin:0 auto;
-    padding:0 28px;
-  }
-
-  /* ---------- NAV ---------- */
-  header.nav{
-    position:sticky;
-    top:0;
-    z-index:50;
-    background:rgba(10,13,10,0.88);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav-inner{
-    max-width:960px;
-    margin:0 auto;
-    padding:16px 28px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    font-family:var(--font-mono);
-    font-size:13px;
-  }
-  .nav-brand{
-    color:var(--amber);
-    letter-spacing:0.02em;
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .nav-brand .dot{
-    width:7px;height:7px;border-radius:50%;
-    background:var(--amber);
-    box-shadow:0 0 8px var(--amber);
-    animation:pulse 2.4s ease-in-out infinite;
-  }
-  .nav-links{display:flex;gap:22px;}
-  .nav-links a{color:var(--text-muted);transition:color .15s;}
-  .nav-links a:hover{color:var(--teal);}
-  @media (max-width:640px){ .nav-links{display:none;} }
-
-  @keyframes pulse{
-    0%,100%{opacity:1;}
-    50%{opacity:.35;}
-  }
-
-  /* ---------- HERO / TERMINAL BOOT ---------- */
-  .hero{
-    padding:96px 0 72px;
-  }
-  .hero-grid{
-    display:grid;
-    grid-template-columns:1fr 260px;
-    gap:24px;
-    align-items:stretch;
-  }
-  @media (max-width:760px){
-    .hero-grid{grid-template-columns:1fr;}
-    .hero-photo{order:-1;max-width:220px;margin:0 auto;}
-  }
-  .hero-photo{
-    position:relative;
-    border-radius:8px;
-    overflow:hidden;
-    border:1px solid var(--line-bright);
-    background:var(--bg-panel);
-    box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 30px 80px -30px rgba(0,0,0,.8);
-  }
-  .hero-photo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    filter:grayscale(15%) contrast(1.08) brightness(0.94);
-  }
-  .hero-photo::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(180deg, rgba(255,182,39,0.12) 0%, transparent 30%, transparent 70%, rgba(10,13,10,0.55) 100%);
-    pointer-events:none;
-  }
-  .hero-photo .tag-badge{
-    position:absolute;
-    bottom:10px;
-    left:10px;
-    z-index:2;
-    font-family:var(--font-mono);
-    font-size:10px;
-    color:var(--amber);
-    background:rgba(10,13,10,0.75);
-    border:1px solid var(--line-bright);
-    padding:4px 8px;
-    border-radius:4px;
-    letter-spacing:.03em;
-  }
-  .terminal{
-    background:var(--bg-panel);
-    border:1px solid var(--line-bright);
-    border-radius:8px;
-    overflow:hidden;
-    box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 30px 80px -30px rgba(0,0,0,.8);
-  }
-  .terminal-bar{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 14px;
-    background:var(--bg-panel-raised);
-    border-bottom:1px solid var(--line);
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:var(--text-dim);
-  }
-  .terminal-bar .btns{display:flex;gap:6px;}
-  .terminal-bar .btns span{width:10px;height:10px;border-radius:50%;background:var(--line-bright);}
-  .terminal-bar .title{margin-left:6px;}
-  .terminal-body{
-    padding:28px 24px 32px;
-    font-family:var(--font-mono);
-    font-size:14px;
-  }
-  .terminal-body .line{margin-bottom:6px;color:var(--text-muted);}
-  .terminal-body .prompt{color:var(--teal);}
-  .terminal-body .out{color:var(--text);}
-  .terminal-body h1{
-    font-family:var(--font-mono);
-    font-size:clamp(28px,5vw,46px);
-    font-weight:700;
-    color:var(--text);
-    margin:14px 0 6px;
-    letter-spacing:-0.01em;
-  }
-  .terminal-body h1 .amber{color:var(--amber);}
-  .role-line{
-    color:var(--text-muted);
-    font-size:16px;
-    margin-bottom:18px;
-  }
-  .role-line strong{color:var(--teal);font-weight:600;}
-  .cursor{
-    display:inline-block;
-    width:9px;height:18px;
-    background:var(--amber);
-    vertical-align:middle;
-    margin-left:2px;
-    animation:blink 1s steps(1) infinite;
-  }
-  @keyframes blink{50%{opacity:0;}}
-
-  .hero-tags{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:22px;
-  }
-  .tag{
-    font-family:var(--font-mono);
-    font-size:11px;
-    padding:5px 10px;
-    border:1px solid var(--line-bright);
-    border-radius:4px;
-    color:var(--text-muted);
-    background:var(--bg-void);
-  }
-
-  .hero-cta{
-    display:flex;
-    gap:12px;
-    margin-top:26px;
-    flex-wrap:wrap;
-  }
-  .btn{
-    font-family:var(--font-mono);
-    font-size:13px;
-    padding:11px 18px;
-    border-radius:5px;
-    border:1px solid transparent;
-    cursor:pointer;
-    transition:transform .12s ease, border-color .12s ease, background .12s ease;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-  }
-  .btn-primary{
-    background:var(--amber);
-    color:#1a1204;
-    font-weight:600;
-  }
-  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(255,182,39,.5);}
-  .btn-ghost{
-    background:transparent;
-    color:var(--text);
-    border-color:var(--line-bright);
-  }
-  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
-
-  /* ---------- SECTION SCAFFOLD ---------- */
-  section{padding:64px 0;border-top:1px solid var(--line);}
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    gap:12px;
-    margin-bottom:34px;
-  }
-  .section-tag{
-    font-family:var(--font-mono);
-    font-size:12px;
-    color:var(--amber);
-    white-space:nowrap;
-  }
-  .section-title{
-    font-family:var(--font-mono);
-    font-size:22px;
-    font-weight:700;
-    color:var(--text);
-  }
-  .section-rule{
-    flex:1;
-    height:1px;
-    background:var(--line-bright);
-  }
-  .section-intro{
-    color:var(--text-muted);
-    max-width:640px;
-    margin-bottom:36px;
-    font-size:15px;
-  }
-
-  /* ---------- STATS ---------- */
-  .stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:8px;
-    overflow:hidden;
-  }
-  .stat{
-    background:var(--bg-panel);
-    padding:22px 16px;
-    text-align:center;
-  }
-  .stat .num{
-    font-family:var(--font-mono);
-    font-size:26px;
-    font-weight:700;
-    color:var(--amber);
-  }
-  .stat .lbl{
-    font-size:11px;
-    color:var(--text-muted);
-    margin-top:4px;
-    letter-spacing:.03em;
-    text-transform:uppercase;
-  }
-  @media (max-width:640px){
-    .stats{grid-template-columns:repeat(2,1fr);}
-  }
-
-  /* ---------- ABOUT ---------- */
-  .about-grid{
-    display:grid;
-    grid-template-columns:1.3fr 1fr;
-    gap:40px;
-  }
-  .about-grid p{color:var(--text-muted);margin-bottom:14px;font-size:15px;}
-  .about-grid strong{color:var(--text);font-weight:600;}
-  .manifest{
-    background:var(--bg-panel);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:18px 20px;
-    font-family:var(--font-mono);
-    font-size:12.5px;
-  }
-  .manifest .mtitle{color:var(--text-dim);margin-bottom:10px;}
-  .manifest .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line);}
-  .manifest .row:last-child{border-bottom:none;}
-  .manifest .k{color:var(--text-muted);}
-  .manifest .v{color:var(--teal);}
-  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
-
-  /* ---------- SKILLS ---------- */
-  .skill-manifest{
-    background:var(--bg-panel);
-    border:1px solid var(--line);
-    border-radius:8px;
-    overflow:hidden;
-  }
-  .skill-row{
-    display:grid;
-    grid-template-columns:190px 1fr;
-    border-bottom:1px solid var(--line);
-  }
-  .skill-row:last-child{border-bottom:none;}
-  .skill-key{
-    font-family:var(--font-mono);
-    font-size:12px;
-    color:var(--amber);
-    padding:16px 18px;
-    background:var(--bg-panel-raised);
-    border-right:1px solid var(--line);
-  }
-  .skill-vals{
-    padding:14px 18px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    align-content:center;
-  }
-  .chip{
-    font-family:var(--font-mono);
-    font-size:12px;
-    padding:5px 10px;
-    background:var(--bg-void);
-    border:1px solid var(--line-bright);
-    border-radius:4px;
-    color:var(--text);
-  }
-  @media (max-width:600px){
-    .skill-row{grid-template-columns:1fr;}
-    .skill-key{border-right:none;border-bottom:1px solid var(--line);}
-  }
-
-  /* ---------- PROJECTS ---------- */
-  .projects{display:flex;flex-direction:column;gap:16px;}
-  .project{
-    background:var(--bg-panel);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:22px 24px;
-    transition:border-color .15s ease, transform .15s ease;
-  }
-  .project:hover{border-color:var(--line-bright);transform:translateY(-2px);}
-  .project-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:16px;
-    flex-wrap:wrap;
-  }
-  .project-name{
-    font-family:var(--font-mono);
-    font-size:17px;
-    font-weight:600;
-    color:var(--text);
-  }
-  .status{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:var(--amber);
-    letter-spacing:.04em;
-  }
-  .status .d{
-    width:6px;height:6px;border-radius:50%;
-    background:var(--amber);
-    box-shadow:0 0 6px var(--amber);
-    animation:pulse 2.4s ease-in-out infinite;
-  }
-  .project-desc{
-    color:var(--text-muted);
-    font-size:14.5px;
-    margin:12px 0 16px;
-    max-width:640px;
-  }
-  .project-foot{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:12px;
-  }
-  .project-stack{display:flex;gap:6px;flex-wrap:wrap;}
-  .project-link{
-    font-family:var(--font-mono);
-    font-size:12.5px;
-    color:var(--teal);
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:8px 14px;
-    border:1px solid var(--line-bright);
-    border-radius:5px;
-    transition:background .15s, color .15s;
-  }
-  .project-link:hover{background:var(--teal);color:#04211c;}
-
-  /* ---------- EXPERIENCE (timeline = real chronology, numbering justified) ---------- */
-  .timeline{
-    position:relative;
-    padding-left:28px;
-    border-left:1px solid var(--line-bright);
-  }
-  .tl-item{
-    position:relative;
-    padding-bottom:34px;
-  }
-  .tl-item:last-child{padding-bottom:0;}
-  .tl-item::before{
-    content:'';
-    position:absolute;
-    left:-33px;
-    top:4px;
-    width:9px;height:9px;
-    border-radius:50%;
-    background:var(--bg-void);
-    border:2px solid var(--amber);
-  }
-  .tl-role{
-    font-family:var(--font-mono);
-    font-size:15px;
-    font-weight:600;
-    color:var(--text);
-  }
-  .tl-org{color:var(--teal);font-size:13.5px;margin-top:2px;}
-  .tl-meta{
-    font-family:var(--font-mono);
-    font-size:11.5px;
-    color:var(--text-dim);
-    margin:4px 0 10px;
-  }
-  .tl-desc{color:var(--text-muted);font-size:14px;}
-  .tl-desc li{margin-bottom:6px;margin-left:18px;}
-
-  /* ---------- EDUCATION / AWARDS ---------- */
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-  @media (max-width:700px){ .two-col{grid-template-columns:1fr;} }
-  .card{
-    background:var(--bg-panel);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:20px 22px;
-  }
-  .card h3{
-    font-family:var(--font-mono);
-    font-size:14px;
-    color:var(--amber);
-    margin-bottom:12px;
-  }
-  .edu-item{margin-bottom:14px;}
-  .edu-item:last-child{margin-bottom:0;}
-  .edu-item .school{font-weight:600;font-size:14.5px;color:var(--text);}
-  .edu-item .deg{color:var(--text-muted);font-size:13px;margin-top:2px;}
-  .edu-item .yrs{font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim);margin-top:2px;}
-  .award-list{list-style:none;}
-  .award-list li{
-    display:flex;
-    gap:10px;
-    padding:9px 0;
-    border-bottom:1px dashed var(--line);
-    font-size:13.5px;
-    color:var(--text-muted);
-  }
-  .award-list li:last-child{border-bottom:none;}
-  .award-list .ic{color:var(--amber);}
-
-  /* ---------- CONTACT ---------- */
-  .contact-panel{
-    background:var(--bg-panel);
-    border:1px solid var(--line-bright);
-    border-radius:8px;
-    padding:36px 32px;
-    text-align:center;
-  }
-  .contact-panel p{color:var(--text-muted);max-width:480px;margin:10px auto 24px;}
-  .contact-links{
-    display:flex;
-    justify-content:center;
-    gap:14px;
-    flex-wrap:wrap;
-  }
-  .note{
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:var(--text-dim);
-    margin-top:20px;
-  }
-
-  footer{
-    padding:32px 0 50px;
-    text-align:center;
-    font-family:var(--font-mono);
-    font-size:11.5px;
-    color:var(--text-dim);
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important;transition:none !important;}
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Inter+Tight:wght@200;300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/skb-baybayin-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/siklab-core.css">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="g-arrow-ne" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 18L18 6M8 6h10v10"/></symbol><symbol id="g-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 12h17M14 6l6 6-6 6"/></symbol><symbol id="g-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 5h18v14H3z"/><path d="M3 5l9 8 9-8"/></symbol><symbol id="g-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol><symbol id="g-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5-6.5-4.5L5.5 21l2-7.5L2 9h7z" fill="currentColor"/></symbol><symbol id="g-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><rect x="4" y="4" width="16" height="16" fill="currentColor"/></symbol><symbol id="g-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3l10 18H2z" fill="currentColor"/></symbol><symbol id="g-data" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 4h16v5H4zM4 9.5h16v5H4zM4 15h16v5H4z"/></symbol><symbol id="g-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></symbol><symbol id="g-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><rect x="10" y="8" width="4" height="4" fill="currentColor"/></symbol><symbol id="g-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M8 8h12v12H8z"/><path d="M4 16V4h12"/></symbol><symbol id="g-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></symbol><symbol id="g-power" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 2v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></symbol></svg>
+<a href="#main" class="skip">Skip to content</a>
 
-<header class="nav">
-  <div class="nav-inner">
-    <div class="nav-brand"><span class="dot"></span> KIERWIN.RAMOS</div>
-    <nav class="nav-links">
-      <a href="#about">about</a>
-      <a href="#skills">skills</a>
-      <a href="#projects">projects</a>
-      <a href="#experience">experience</a>
-      <a href="#contact">contact</a>
-    </nav>
+<nav class="topnav" aria-label="Sections">
+  <a class="brand-mini" href="#cover" aria-label="Kierwin D. Ramos — back to top"><span class="sq"></span><span><b>Kierwin<br>Ramos</b></span><span class="sub">SYS.ENG // KR-26</span></a>
+  <div class="links"><a href="#about" data-sec="about"><span>01</span>About</a><a href="#skills" data-sec="skills"><span>02</span>Stack</a><a href="#projects" data-sec="projects"><span>03</span>Work</a><a href="#experience" data-sec="experience"><span>04</span>Log</a><a href="#record" data-sec="record"><span>05</span>Record</a><a href="#contact" data-sec="contact"><span>06</span>Contact</a></div>
+  <div class="nav-tools">
+    <button type="button" class="mode-switch" data-switch="theme" role="switch" aria-checked="false" aria-label="Night mode (Gabi)"><span data-v="light">ARAW</span><span data-v="dark">GABI</span></button>
+    <button type="button" class="mode-switch" data-switch="accent" role="switch" aria-checked="false" aria-label="Mono print mode"><span data-v="pula">A·PULA</span><span data-v="mono">B·MONO</span></button>
+    <button type="button" class="mode-switch" data-switch="scale" role="switch" aria-checked="false" aria-label="Large text (100% scale)"><span data-v="90">90%</span><span data-v="100">100%</span></button>
   </div>
-</header>
+</nav>
 
-<main class="wrap">
+<aside class="rail" aria-hidden="true">
+  <span class="vlabel red" id="rail-label">cover—</span>
+  <div class="rail-dots"><a href="#cover" data-sec="cover" tabindex="-1" aria-hidden="true" title="Cover"></a><a href="#about" data-sec="about" tabindex="-1" aria-hidden="true" title="About"></a><a href="#skills" data-sec="skills" tabindex="-1" aria-hidden="true" title="Stack"></a><a href="#projects" data-sec="projects" tabindex="-1" aria-hidden="true" title="Work"></a><a href="#experience" data-sec="experience" tabindex="-1" aria-hidden="true" title="Log"></a><a href="#record" data-sec="record" tabindex="-1" aria-hidden="true" title="Record"></a><a href="#contact" data-sec="contact" tabindex="-1" aria-hidden="true" title="Contact"></a></div>
+  <span class="label red" id="rail-num">00</span>
+</aside>
 
-  <!-- HERO -->
-  <section class="hero" style="border-top:none;padding-top:64px;">
-    <div class="hero-grid">
-      <div class="terminal">
-        <div class="terminal-bar">
-          <div class="btns"><span></span><span></span><span></span></div>
-          <div class="title">kierwin@systems-eng: ~</div>
+<div class="with-rail">
+<main id="main">
+
+  <!-- 00 // COVER -->
+  <section id="cover" class="cover" aria-label="Introduction">
+    <div class="cover-left">
+      <div class="row" style="justify-content:space-between;align-items:flex-start">
+        <div class="stack" style="gap:10px">
+          <span class="mark ink"></span>
+          <p class="cover-intro">Production software for a <span class="red">high-volume</span> HDD manufacturing line.</p>
+          <a class="link" href="#about">Read profile <svg class="gl" width="12" height="12" aria-hidden="true"><use href="#g-arrow-ne"/></svg></a>
         </div>
-        <div class="terminal-body">
-          <div class="line"><span class="prompt">$</span> <span class="out">whoami</span></div>
-          <h1>KIERWIN D. <span class="amber">RAMOS</span><span class="cursor"></span></h1>
-          <div class="role-line">Systems Engineer — <strong>full-stack development</strong>, automation & <strong>AI-augmented engineering</strong></div>
-          <div class="line"><span class="prompt">$</span> <span class="out">cat status.log</span></div>
-          <div class="line" style="margin-top:4px;">→ based in Laguna, Philippines · open to freelance & full-time roles</div>
-          <div class="hero-tags">
-            <span class="tag">C#.NET</span>
-            <span class="tag">PHP</span>
-            <span class="tag">Python</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">SQL</span>
-            <span class="tag">Linux Shell</span>
-            <span class="tag">AI-Assisted Dev</span>
-          </div>
-          <div class="hero-cta">
-            <a href="#projects" class="btn btn-primary">view deployed work →</a>
-            <a href="#contact" class="btn btn-ghost">get in touch</a>
-          </div>
+        <div class="stack" style="gap:6px;text-align:right">
+          <p class="micro">VER 2026 · LAGUNA PH</p>
+          <p class="micro">06 MODULES · 3 MODES</p>
+          <span style="font-size:1.4rem" class="bb bb--bold" lang="tl-Tglg" title="kierwin" aria-hidden="true">ᜃᜒᜁᜍ᜔ᜏᜒᜈ᜔</span>
         </div>
       </div>
-      <div class="hero-photo">
-        <img src="profile.jpg" alt="Kierwin D. Ramos, Systems Engineer">
-        <span class="tag-badge">● online</span>
+      <div>
+        <p class="micro" style="margin-bottom:16px">INDEX — ABOUT · STACK · WORK · LOG · RECORD · CONTACT</p>
+        <h1 class="cover-title">Kierwin<br><span class="red">Ramos</span><span class="sr-only"> — Systems Engineer</span></h1>
+        <p class="cover-role"><b>Systems Engineer</b> — full-stack development, automation &amp; AI-augmented engineering.</p>
+        <div class="cover-tags"><span class="chip">C#.NET</span><span class="chip">PHP</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">SQL</span><span class="chip">Linux Shell</span><span class="chip">AI-Assisted Dev</span></div>
+        <div class="cover-cta">
+          <a href="#projects" class="btn red"><span>View deployed work</span><svg class="gl" width="16" height="16" aria-hidden="true"><use href="#g-arrow-r"/></svg></a>
+          <a href="#contact" class="btn ghost"><span>Get in touch</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="cover-art">
+      <div class="art-red" aria-hidden="true"></div>
+      <svg class="art-px" id="pixel-art" viewBox="0 0 28 28" shape-rendering="crispEdges" aria-hidden="true"></svg>
+      <div class="art-stripes stripes" aria-hidden="true"></div>
+      <figure class="art-photo">
+        <img src="profile.jpg" alt="Portrait of Kierwin D. Ramos" width="340" height="512">
+        <figcaption><i aria-hidden="true"></i>Online · KR-26</figcaption>
+      </figure>
+      <span class="bbcols art-cols" aria-hidden="true"><span class="bbcol" lang="tl-Tglg" aria-hidden="true"><span>ᜃᜒ</span><span>ᜁ</span><span>ᜍ᜔</span><span>ᜏᜒ</span><span>ᜈ᜔</span><span>ᜍ</span><span>ᜋᜓ</span><span>ᜐ᜔</span></span><span class="bbcol" lang="tl-Tglg" aria-hidden="true"><span>ᜁ</span><span>ᜈ᜔</span><span>ᜑᜒ</span><span>ᜈ᜔</span><span>ᜌᜒ</span><span>ᜍᜓ</span></span><span class="bbcol" lang="tl-Tglg" aria-hidden="true"><span>ᜎᜒ</span><span>ᜃ᜔</span><span>ᜑ</span></span></span>
+      <p class="art-copy body-mono">C#.NET, PHP, Python and shell automation keeping a factory line moving. Hard edges, one red, no gradients.</p>
+      <a href="#projects" class="btn sq art-arrow" aria-label="Jump to deployed work"><svg class="gl" width="20" height="20" aria-hidden="true"><use href="#g-arrow-ne"/></svg></a>
+      <div class="art-circle" aria-hidden="true"></div>
+      <div class="art-fig stack" style="gap:8px" aria-hidden="true">
+        <p class="micro">FIG. 00 — COVER PLATE</p>
+        <div class="pager-mini"><span class="red">01</span><i></i><span>06</span></div>
       </div>
     </div>
   </section>
+
+  <div class="ticker" aria-hidden="true"><span><span class="ticker__item">SYSTEMS ENGINEER</span><span class="ticker__item bb" lang="tl-Tglg">■ ᜐᜒᜐ᜔ᜆᜒᜋ</span><span class="ticker__item">C#.NET / PHP / PYTHON</span><span class="ticker__item">///</span><span class="ticker__item">OPEN TO WORK</span><span class="ticker__item bb" lang="tl-Tglg">ᜎᜒᜃ᜔ᜑ ᜀᜅ᜔ ᜎᜃᜐ᜔</span><span class="ticker__item">LAGUNA · PH</span><span class="ticker__item">//:026</span><span class="ticker__item">AI-AUGMENTED ENGINEERING</span><span class="ticker__item bb" lang="tl-Tglg">ᜐᜒᜃ᜔ᜎᜊ᜔</span><span class="ticker__item">BUILT ON THE GRID</span><span class="ticker__item">■</span><span class="ticker__item">SYSTEMS ENGINEER</span><span class="ticker__item bb" lang="tl-Tglg">■ ᜐᜒᜐ᜔ᜆᜒᜋ</span><span class="ticker__item">C#.NET / PHP / PYTHON</span><span class="ticker__item">///</span><span class="ticker__item">OPEN TO WORK</span><span class="ticker__item bb" lang="tl-Tglg">ᜎᜒᜃ᜔ᜑ ᜀᜅ᜔ ᜎᜃᜐ᜔</span><span class="ticker__item">LAGUNA · PH</span><span class="ticker__item">//:026</span><span class="ticker__item">AI-AUGMENTED ENGINEERING</span><span class="ticker__item bb" lang="tl-Tglg">ᜐᜒᜃ᜔ᜎᜊ᜔</span><span class="ticker__item">BUILT ON THE GRID</span><span class="ticker__item">■</span></span></div>
 
   <!-- STATS -->
-  <section style="border-top:none;padding-top:0;padding-bottom:0;">
-    <div class="stats">
-      <div class="stat"><div class="num">3</div><div class="lbl">Live Deployments</div></div>
-      <div class="stat"><div class="num">7+</div><div class="lbl">Languages & Tools</div></div>
-      <div class="stat"><div class="num">4</div><div class="lbl">Engineering Awards</div></div>
-      <div class="stat"><div class="num">2024</div><div class="lbl">BS Comp. Eng. Grad</div></div>
+  <section class="stats-band" aria-label="Key numbers">
+    <div class="cells c4">
+      <div><span class="micro tag">#01</span><p class="label">Live deployments</p><span class="readout" data-count="3" data-pad="2">03</span><p class="micro">IN PRODUCTION TODAY</p></div>
+      <div><span class="micro tag">#02</span><p class="label">Languages &amp; tools</p><span class="readout" data-count="7" data-pad="2" data-suffix="+">07+</span><p class="micro">C# · PHP · PY · JS · SQL</p></div>
+      <div><span class="micro tag">#03</span><p class="label">Engineering awards</p><span class="readout red" data-count="4" data-pad="2">04</span><p class="micro">TOSHIBA · LSPU</p></div>
+      <div><span class="micro tag">#04</span><p class="label">BS Comp. Eng.</p><span class="lcd">2024</span><p class="micro">LSPU GRADUATE</p></div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-head">
-      <span class="section-tag">01</span>
-      <span class="section-title">about</span>
-      <span class="section-rule"></span>
-    </div>
-    <div class="about-grid">
-      <div>
-        <p>I'm a <strong>Systems Engineer</strong> currently building and maintaining production software inside a high-volume HDD manufacturing environment at <strong>Toshiba Equipment Information (Phils.) Inc.</strong> — where downtime is measured in cost, and every script has to earn its place on the line.</p>
+  <!-- 01 // ABOUT -->
+  <section id="about" class="sec">
+    <span class="sec-ghost" lang="tl-Tglg" aria-hidden="true">ᜆᜓᜅ᜔ᜃᜓᜎ᜔</span>
+    <header class="sec-head">
+      <span class="sec-num" aria-hidden="true">01</span>
+      <h2 class="sec-title"><span class="soft">The </span>About</h2>
+      <div class="sec-side">
+        <div class="sec-meta"><p class="micro">PROFILE · KR-26</p><p class="micro">KR/26 · //01</p></div>
+        <span class="vlabel red">tungkol—</span>
+      </div>
+    </header>
+    <div class="cells c2">
+      <div class="stack" style="gap:18px">
+        <p class="lead" style="margin:0">I'm a <b>Systems Engineer</b> building and maintaining production software inside a high-volume HDD manufacturing environment at Toshiba Equipment Information (Phils.) Inc. — where downtime is measured in cost, and every script has to earn its place on the line.</p>
         <p>My day-to-day spans <strong>C#.NET, PHP, Python, and JavaScript</strong> for web and desktop tooling, <strong>Linux shell automation</strong> for system monitoring, and <strong>SQL</strong> for real-time production reporting. I lean heavily on <strong>AI-assisted development workflows</strong> — using them to prototype faster, refactor cleaner, and ship business applications without cutting corners on requirements.</p>
-        <p>Outside the factory floor, I build and ship full-stack web products end-to-end — the three below are live, in production, and used by real businesses today.</p>
+        <p>Outside the factory floor, I build and ship full-stack web products end-to-end — the three in <a class="link" href="#projects">03 // Work</a> are live, in production, and used by real businesses today.</p>
       </div>
-      <div class="manifest">
-        <div class="mtitle">// quick facts</div>
-        <div class="row"><span class="k">role</span><span class="v">Systems Engineer</span></div>
-        <div class="row"><span class="k">company</span><span class="v">Toshiba (Phils.) Inc.</span></div>
-        <div class="row"><span class="k">location</span><span class="v">Laguna, PH</span></div>
-        <div class="row"><span class="k">education</span><span class="v">BS Comp. Eng.</span></div>
-        <div class="row"><span class="k">focus</span><span class="v">Full-stack + AI dev</span></div>
-        <div class="row"><span class="k">status</span><span class="v">open to work</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-head">
-      <span class="section-tag">02</span>
-      <span class="section-title">skills.manifest</span>
-      <span class="section-rule"></span>
-    </div>
-    <div class="skill-manifest">
-      <div class="skill-row">
-        <div class="skill-key">languages</div>
-        <div class="skill-vals">
-          <span class="chip">C#.NET</span><span class="chip">PHP</span><span class="chip">JavaScript</span>
-          <span class="chip">Python</span><span class="chip">Java</span><span class="chip">C++</span><span class="chip">SQL</span>
-        </div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-key">ai & dev workflow</div>
-        <div class="skill-vals">
-          <span class="chip">AI-Assisted Development</span><span class="chip">AI Coding Assistants</span>
-          <span class="chip">AI-Augmented Workflows</span><span class="chip">Prompt Engineering</span>
-        </div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-key">automation & systems</div>
-        <div class="skill-vals">
-          <span class="chip">Linux Shell Scripting</span><span class="chip">Process Automation</span>
-          <span class="chip">System Troubleshooting</span><span class="chip">SQL DB Management</span>
-        </div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-key">tools</div>
-        <div class="skill-vals">
-          <span class="chip">Git</span><span class="chip">Visual Studio</span><span class="chip">AI Dev Tools</span>
-        </div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-key">design</div>
-        <div class="skill-vals">
-          <span class="chip">Photoshop</span><span class="chip">Illustrator</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-head">
-      <span class="section-tag">03</span>
-      <span class="section-title">deployed projects</span>
-      <span class="section-rule"></span>
-    </div>
-    <p class="section-intro">Full-stack builds shipped and running in production — built on JavaScript, PHP, and MySQL, from brand storefront to internal finance tooling.</p>
-
-    <div class="projects">
-
-      <div class="project">
-        <div class="project-top">
-          <div class="project-name">EDX Decals</div>
-          <div class="status"><span class="d"></span>LIVE</div>
-        </div>
-        <p class="project-desc">Custom vinyl decal storefront for motors, cars, and helmets — bold stickers and clean finishes made to look instantly sharper. Built as a full brand + e-commerce experience.</p>
-        <div class="project-foot">
-          <div class="project-stack">
-            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span>
+      <div>
+        <div class="label-card">
+          <div class="label-head"><span class="label">KR-26 // Quick facts</span><span style="font-size:1.15rem" class="bb bb--bold" lang="tl-Tglg" title="datos" aria-hidden="true">ᜇᜆᜓᜐ᜔</span></div>
+          <div class="label-body">
+            <table class="spec-table"><tbody>
+              <tr><td class="micro" style="color:var(--ink)">Role</td><td>Systems Engineer</td></tr>
+              <tr><td class="micro" style="color:var(--ink)">Company</td><td>Toshiba (Phils.) Inc.</td></tr>
+              <tr><td class="micro" style="color:var(--ink)">Location</td><td>Laguna, PH</td></tr>
+              <tr><td class="micro" style="color:var(--ink)">Education</td><td>BS Comp. Eng.</td></tr>
+              <tr><td class="micro" style="color:var(--ink)">Focus</td><td>Full-stack + AI dev</td></tr>
+              <tr><td class="micro" style="color:var(--ink)">Status</td><td><span class="chip warn">Open to work</span></td></tr>
+            </tbody></table>
           </div>
-          <a class="project-link" href="https://denox-co.synergize.co/edx.decals/" target="_blank" rel="noopener">visit live site →</a>
+          <div class="stripes" style="height:14px" aria-hidden="true"></div>
+          <div class="label-foot"><svg class="barcode" viewBox="0 0 138 36" preserveAspectRatio="none" aria-hidden="true"><g fill="currentColor"><rect x="0" y="0" width="1" height="36"/><rect x="5" y="0" width="1" height="36"/><rect x="10" y="0" width="1" height="36"/><rect x="16" y="0" width="1" height="36"/><rect x="22" y="0" width="3" height="36"/><rect x="31" y="0" width="3" height="36"/><rect x="37" y="0" width="1" height="36"/><rect x="42" y="0" width="3" height="36"/><rect x="48" y="0" width="2" height="36"/><rect x="54" y="0" width="1" height="36"/><rect x="58" y="0" width="3" height="36"/><rect x="65" y="0" width="1" height="36"/><rect x="72" y="0" width="3" height="36"/><rect x="81" y="0" width="1" height="36"/><rect x="85" y="0" width="1" height="36"/><rect x="92" y="0" width="1" height="36"/><rect x="97" y="0" width="1" height="36"/><rect x="102" y="0" width="1" height="36"/><rect x="108" y="0" width="1" height="36"/><rect x="114" y="0" width="3" height="36"/><rect x="123" y="0" width="3" height="36"/><rect x="129" y="0" width="1" height="36"/><rect x="134" y="0" width="3" height="36"/></g></svg><p class="micro">BRAND: KIERWIN / MODEL: KR-26<br>BUILT IN LAGUNA</p><span class="chip ok">SYS·ENG</span></div>
         </div>
-      </div>
-
-      <div class="project">
-        <div class="project-top">
-          <div class="project-name">ESTRELLE</div>
-          <div class="status"><span class="d"></span>LIVE</div>
-        </div>
-        <p class="project-desc">Classy custom bag brand for modern women — moss green, terracotta, and graceful everyday luxury, shaped into a full product catalog and storefront.</p>
-        <div class="project-foot">
-          <div class="project-stack">
-            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span>
-          </div>
-          <a class="project-link" href="http://denox-co.synergize.co/edx.estrelle/" target="_blank" rel="noopener">visit live site →</a>
-        </div>
-      </div>
-
-      <div class="project">
-        <div class="project-top">
-          <div class="project-name">FINANCE</div>
-          <div class="status"><span class="d"></span>LIVE</div>
-        </div>
-        <p class="project-desc">Personal finance manager for handling income, savings, debt, and budget in one place — built to make everyday money management effortless.</p>
-        <div class="project-foot">
-          <div class="project-stack">
-            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span>
-          </div>
-          <a class="project-link" href="https://denox-co.synergize.co/edx.finance" target="_blank" rel="noopener">visit live site →</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="section-head">
-      <span class="section-tag">04</span>
-      <span class="section-title">experience.log</span>
-      <span class="section-rule"></span>
-    </div>
-    <div class="timeline">
-
-      <div class="tl-item">
-        <div class="tl-role">Systems Engineer</div>
-        <div class="tl-org">Toshiba Equipment Information (Phils.) Inc.</div>
-        <div class="tl-meta">Nov 2024 — Present · Laguna, Philippines</div>
-        <ul class="tl-desc">
-          <li>Engineer and maintain web and desktop applications using C#.NET, PHP, and JavaScript to automate critical HDD manufacturing workflows.</li>
-          <li>Develop and deploy Python scripts and Linux shell automation tools to enhance system monitoring and drive production cost reductions.</li>
-          <li>Leverage AI-assisted development tools to accelerate development, debugging, code generation, refactoring, and documentation.</li>
-          <li>Conduct root-cause analysis and implement fixes for production software, minimizing downtime through expert troubleshooting.</li>
-          <li>Manage and optimize SQL databases to ensure high availability and data integrity for real-time production reporting.</li>
-        </ul>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-role">QA Engineer (OJT)</div>
-        <div class="tl-org">LCCTVMPC</div>
-        <div class="tl-meta">Feb 2024 — May 2024 · San Pablo, Laguna</div>
-        <ul class="tl-desc">
-          <li>Performed comprehensive testing of products and equipment to verify compliance with safety and performance standards.</li>
-        </ul>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-role">IT Support</div>
-        <div class="tl-org">Management Information Office</div>
-        <div class="tl-meta">Aug 2018 — Sep 2018 · Laguna, Philippines</div>
-        <ul class="tl-desc">
-          <li>Provided technical infrastructure support and designed professional graphics for the Provincial Government of Laguna.</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- EDUCATION & AWARDS -->
-  <section id="education">
-    <div class="section-head">
-      <span class="section-tag">05</span>
-      <span class="section-title">education & awards</span>
-      <span class="section-rule"></span>
-    </div>
-    <div class="two-col">
-      <div class="card">
-        <h3>// education</h3>
-        <div class="edu-item">
-          <div class="school">Laguna State Polytechnic University</div>
-          <div class="deg">BS Computer Engineering — Best in Research Award</div>
-          <div class="yrs">2019 — 2024</div>
-        </div>
-        <div class="edu-item">
-          <div class="school">ACTS Computer College</div>
-          <div class="deg">TVL: Information Communication & Technology — With Honors & Conduct Award</div>
-          <div class="yrs">2017 — 2019</div>
-        </div>
-      </div>
-      <div class="card">
-        <h3>// awards</h3>
-        <ul class="award-list">
-          <li><span class="ic">▸</span> Kaizen Award — Toshiba, 2025</li>
-          <li><span class="ic">▸</span> Best Engineer Award — Toshiba</li>
-          <li><span class="ic">▸</span> Bright Program Award — Toshiba</li>
-          <li><span class="ic">▸</span> Best in Research Award — LSPU</li>
-        </ul>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-head">
-      <span class="section-tag">06</span>
-      <span class="section-title">contact</span>
-      <span class="section-rule"></span>
-    </div>
-    <div class="contact-panel">
-      <div style="font-family:var(--font-mono);color:var(--amber);font-size:13px;">$ mail --compose</div>
-      <p>Open to freelance projects, contract work, and full-time systems / full-stack engineering roles. Reach out below.</p>
-      <div class="contact-links">
-        <a class="btn btn-primary" href="mailto:kierwinramos28@gmail.com">email me</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/kierwin-ramos-5992a41a2/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/Denox9" target="_blank" rel="noopener">GitHub</a>
+  <!-- 02 // SKILLS -->
+  <section id="skills" class="sec">
+    <span class="sec-ghost" lang="tl-Tglg" aria-hidden="true">ᜃᜃᜌᜑᜈ᜔</span>
+    <header class="sec-head">
+      <span class="sec-num" aria-hidden="true">02</span>
+      <h2 class="sec-title"><span class="soft">The </span>Stack</h2>
+      <div class="sec-side">
+        <div class="sec-meta"><p class="micro">SKILLS.MANIFEST · 05 GROUPS</p><p class="micro">KR/26 · //02</p></div>
+        <span class="vlabel red">kakayahan—</span>
       </div>
+    </header>
+    <p class="lead">Five groups, one rule: <b>use the right tool</b> for the line, then automate the rest.</p>
+    <div class="skill-list" style="border-top:2px solid var(--ink)">
+      <div>
+        <span class="n">01</span>
+        <span class="t">Languages<small class="micro"><span class="bb" lang="tl-Tglg" title="wika" aria-hidden="true">ᜏᜒᜃ</span> · WIKA</small></span>
+        <span class="d"><span class="chip">C#.NET</span><span class="chip">PHP</span><span class="chip">JavaScript</span><span class="chip">Python</span><span class="chip">Java</span><span class="chip">C++</span><span class="chip">SQL</span></span>
+      </div>
+      <div>
+        <span class="n">02</span>
+        <span class="t">AI &amp; dev workflow<small class="micro"><span class="bb" lang="tl-Tglg" title="daloy" aria-hidden="true">ᜇᜎᜓᜌ᜔</span> · DALOY</small></span>
+        <span class="d"><span class="chip">AI-Assisted Development</span><span class="chip">AI Coding Assistants</span><span class="chip">AI-Augmented Workflows</span><span class="chip">Prompt Engineering</span></span>
+      </div>
+      <div>
+        <span class="n">03</span>
+        <span class="t">Automation &amp; systems<small class="micro"><span class="bb" lang="tl-Tglg" title="sistema" aria-hidden="true">ᜐᜒᜐ᜔ᜆᜒᜋ</span> · SISTEMA</small></span>
+        <span class="d"><span class="chip">Linux Shell Scripting</span><span class="chip">Process Automation</span><span class="chip">System Troubleshooting</span><span class="chip">SQL DB Management</span></span>
+      </div>
+      <div>
+        <span class="n">04</span>
+        <span class="t">Tools<small class="micro"><span class="bb" lang="tl-Tglg" title="gamit" aria-hidden="true">ᜄᜋᜒᜆ᜔</span> · GAMIT</small></span>
+        <span class="d"><span class="chip">Git</span><span class="chip">Visual Studio</span><span class="chip">AI Dev Tools</span></span>
+      </div>
+      <div>
+        <span class="n">05</span>
+        <span class="t">Design<small class="micro"><span class="bb" lang="tl-Tglg" title="disenyo" aria-hidden="true">ᜇᜒᜐᜒᜈ᜔ᜌᜓ</span> · DISENYO</small></span>
+        <span class="d"><span class="chip">Photoshop</span><span class="chip">Illustrator</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 // PROJECTS -->
+  <section id="projects" class="sec">
+    <span class="sec-ghost" lang="tl-Tglg" aria-hidden="true">ᜄᜏ</span>
+    <header class="sec-head">
+      <span class="sec-num" aria-hidden="true">03</span>
+      <h2 class="sec-title"><span class="soft">Deployed </span>Work</h2>
+      <div class="sec-side">
+        <div class="sec-meta"><p class="micro">3 LIVE · JS / PHP / MYSQL</p><p class="micro">KR/26 · //03</p></div>
+        <span class="vlabel red">gawa—</span>
+      </div>
+    </header>
+    <p class="lead">Full-stack builds <b>shipped and running in production</b> — from brand storefront to internal finance tooling.</p>
+    <div class="works">
+      <article class="work">
+        <div class="work-head"><span class="label">01 — S-01</span><span class="chip warn work-live"><i aria-hidden="true"></i>Live</span></div>
+        <div class="work-plate" aria-hidden="true"><div class="stripes" style="left:0;top:0;width:46%;height:100%"></div><div style="right:0;top:18%;width:40%;height:64%;background:var(--red)"></div></div>
+        <h3 class="work-name">EDX Decals</h3>
+        <p class="micro"><span class="bb" lang="tl-Tglg" title="tatak" aria-hidden="true">ᜆᜆᜃ᜔</span> · JS / PHP / MYSQL · DENOX-CO</p>
+        <p class="work-desc">Custom vinyl decal storefront for motors, cars, and helmets — bold stickers and clean finishes made to look instantly sharper. Built as a full brand + e-commerce experience.</p>
+        <div class="work-stack"><span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span></div>
+        <a class="btn ghost" href="https://denox-co.synergize.co/edx.decals/" target="_blank" rel="noopener"><span>Visit live site</span><svg class="gl" width="14" height="14" aria-hidden="true"><use href="#g-arrow-ne"/></svg></a>
+      </article>
+      <article class="work">
+        <div class="work-head"><span class="label">02 — S-02</span><span class="chip warn work-live"><i aria-hidden="true"></i>Live</span></div>
+        <div class="work-plate" aria-hidden="true"><div class="hatch" style="left:0;top:0;width:60%;height:100%"></div><div style="right:8%;top:10%;width:5.5rem;height:5.5rem;border-radius:50%;background:var(--red)"></div></div>
+        <h3 class="work-name">Estrelle</h3>
+        <p class="micro"><span class="bb" lang="tl-Tglg" title="ganda" aria-hidden="true">ᜄᜈ᜔ᜇ</span> · JS / PHP / MYSQL · DENOX-CO</p>
+        <p class="work-desc">Classy custom bag brand for modern women — moss green, terracotta, and graceful everyday luxury, shaped into a full product catalog and storefront.</p>
+        <div class="work-stack"><span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span></div>
+        <a class="btn ghost" href="http://denox-co.synergize.co/edx.estrelle/" target="_blank" rel="noopener"><span>Visit live site</span><svg class="gl" width="14" height="14" aria-hidden="true"><use href="#g-arrow-ne"/></svg></a>
+      </article>
+      <article class="work">
+        <div class="work-head"><span class="label">03 — S-03</span><span class="chip warn work-live"><i aria-hidden="true"></i>Live</span></div>
+        <div class="work-plate" aria-hidden="true"><div class="dots" style="left:0;top:0;width:70%;height:100%"></div><div style="right:0;top:0;width:34%;height:100%;background:var(--red);clip-path:polygon(0 0,100% 0,100% 30%,62% 30%,62% 100%,38% 100%,38% 30%,0 30%)"></div></div>
+        <h3 class="work-name">Finance</h3>
+        <p class="micro"><span class="bb" lang="tl-Tglg" title="pera" aria-hidden="true">ᜉᜒᜍ</span> · JS / PHP / MYSQL · DENOX-CO</p>
+        <p class="work-desc">Personal finance manager for handling income, savings, debt, and budget in one place — built to make everyday money management effortless.</p>
+        <div class="work-stack"><span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span></div>
+        <a class="btn ghost" href="https://denox-co.synergize.co/edx.finance" target="_blank" rel="noopener"><span>Visit live site</span><svg class="gl" width="14" height="14" aria-hidden="true"><use href="#g-arrow-ne"/></svg></a>
+      </article>
+    </div>
+  </section>
+
+  <!-- 04 // EXPERIENCE -->
+  <section id="experience" class="sec">
+    <span class="sec-ghost" lang="tl-Tglg" aria-hidden="true">ᜃᜍᜈᜐᜈ᜔</span>
+    <header class="sec-head">
+      <span class="sec-num" aria-hidden="true">04</span>
+      <h2 class="sec-title"><span class="soft">The </span>Log</h2>
+      <div class="sec-side">
+        <div class="sec-meta"><p class="micro">EXPERIENCE.LOG · 2018—NOW</p><p class="micro">KR/26 · //04</p></div>
+        <span class="vlabel red">karanasan—</span>
+      </div>
+    </header>
+    <div class="xp">
+      <article>
+        <p class="yr">2024<small>Nov 2024 — Present</small></p>
+        <div>
+          <h3 class="role">Systems Engineer</h3>
+          <p class="org">Toshiba Equipment Information (Phils.) Inc.</p>
+          <p class="micro" style="margin-top:6px">Laguna, Philippines</p>
+        </div>
+        <ul><li>Engineer and maintain web and desktop applications using C#.NET, PHP, and JavaScript to automate critical HDD manufacturing workflows.</li><li>Develop and deploy Python scripts and Linux shell automation tools to enhance system monitoring and drive production cost reductions.</li><li>Leverage AI-assisted development tools to accelerate development, debugging, code generation, refactoring, and documentation.</li><li>Conduct root-cause analysis and implement fixes for production software, minimizing downtime through expert troubleshooting.</li><li>Manage and optimize SQL databases to ensure high availability and data integrity for real-time production reporting.</li></ul>
+      </article>
+      <article>
+        <p class="yr">2024<small>Feb 2024 — May 2024</small></p>
+        <div>
+          <h3 class="role">QA Engineer (OJT)</h3>
+          <p class="org">LCCTVMPC</p>
+          <p class="micro" style="margin-top:6px">San Pablo, Laguna</p>
+        </div>
+        <ul><li>Performed comprehensive testing of products and equipment to verify compliance with safety and performance standards.</li></ul>
+      </article>
+      <article>
+        <p class="yr">2018<small>Aug 2018 — Sep 2018</small></p>
+        <div>
+          <h3 class="role">IT Support</h3>
+          <p class="org">Management Information Office</p>
+          <p class="micro" style="margin-top:6px">Laguna, Philippines</p>
+        </div>
+        <ul><li>Provided technical infrastructure support and designed professional graphics for the Provincial Government of Laguna.</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- 05 // EDUCATION + AWARDS -->
+  <section id="record" class="sec">
+    <span class="sec-ghost" lang="tl-Tglg" aria-hidden="true">ᜉᜍᜅᜎ᜔</span>
+    <header class="sec-head">
+      <span class="sec-num" aria-hidden="true">05</span>
+      <h2 class="sec-title"><span class="soft">The </span>Record</h2>
+      <div class="sec-side">
+        <div class="sec-meta"><p class="micro">EDUCATION · AWARDS</p><p class="micro">KR/26 · //05</p></div>
+        <span class="vlabel red">parangal—</span>
+      </div>
+    </header>
+    <div class="cells c2">
+      <div>
+        <p class="cell-title">Education</p>
+        <div class="edu">
+          <div><span class="y">2019 — 2024</span><div><p class="s">Laguna State Polytechnic University</p><p class="g">BS Computer Engineering — <span class="red">Best in Research Award</span></p></div></div>
+          <div><span class="y">2017 — 2019</span><div><p class="s">ACTS Computer College</p><p class="g">TVL: Information Communication &amp; Technology — With Honors &amp; Conduct Award</p></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="cell-title">Awards</p>
+        <div class="awards">
+          <div class="plate attn"><div class="sym"><svg class="gl" width="30" height="30" aria-hidden="true"><use href="#g-star"/></svg></div><div class="txt"><p class="word">Kaizen Award</p><p class="micro">TOSHIBA · 2025</p></div></div>
+          <div class="plate"><div class="sym"><svg class="gl" width="30" height="30" aria-hidden="true"><use href="#g-power"/></svg></div><div class="txt"><p class="word">Best Engineer</p><p class="micro">TOSHIBA</p></div></div>
+          <div class="plate"><div class="sym"><svg class="gl" width="30" height="30" aria-hidden="true"><use href="#g-layers"/></svg></div><div class="txt"><p class="word">Bright Program</p><p class="micro">TOSHIBA</p></div></div>
+          <div class="plate inverse"><div class="sym"><svg class="gl" width="30" height="30" aria-hidden="true"><use href="#g-data"/></svg></div><div class="txt"><p class="word">Best in Research</p><p class="micro">LSPU</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 // CONTACT -->
+  <section id="contact" class="contact" aria-labelledby="contact-title">
+    <div class="contact-stripes stripes inv" aria-hidden="true"></div>
+    <span class="bbcols contact-cols" aria-hidden="true"><span class="bbcol" lang="tl-Tglg" aria-hidden="true"><span>ᜂ</span><span>ᜄ᜔</span><span>ᜈ</span><span>ᜌ</span><span>ᜈ᜔</span></span><span class="bbcol" lang="tl-Tglg" aria-hidden="true"><span>ᜆ</span><span>ᜌᜓ</span><span>ᜈ</span></span></span>
+    <p class="micro">06 // OPEN CHANNEL — <span class="bb bb--bold" lang="tl-Tglg" title="ugnayan" aria-hidden="true">ᜂᜄ᜔ᜈᜌᜈ᜔</span></p>
+    <h2 id="contact-title" class="contact-title">Let's<br><span class="soft">build</span> it.</h2>
+    <p>Open to freelance projects, contract work, and full-time systems / full-stack engineering roles.</p>
+    <div class="contact-links">
+      <a class="btn lg mail" href="mailto:kierwinramos28@gmail.com"><span>kierwinramos28@gmail.com</span><svg class="gl" width="18" height="18" aria-hidden="true"><use href="#g-mail"/></svg></a>
+      <button type="button" class="btn ghost lg" data-copy="kierwinramos28@gmail.com"><span>Copy email</span><svg class="gl" width="18" height="18" aria-hidden="true"><use href="#g-copy"/></svg></button>
+      <a class="btn ghost lg" href="https://www.linkedin.com/in/kierwin-ramos-5992a41a2/" target="_blank" rel="noopener"><span>LinkedIn</span><svg class="gl" width="18" height="18" aria-hidden="true"><use href="#g-arrow-ne"/></svg></a>
+      <a class="btn ghost lg" href="https://github.com/Denox9" target="_blank" rel="noopener"><span>GitHub</span><svg class="gl" width="18" height="18" aria-hidden="true"><use href="#g-arrow-ne"/></svg></a>
     </div>
   </section>
 
 </main>
-
-<footer>
-  © 2026 Kierwin D. Ramos · built with care · Laguna, Philippines
+<footer class="footer">
+  <p class="micro">© 2026 KIERWIN D. RAMOS · BUILT ON THE GRID, BORN FROM FIRE · LAGUNA, PHILIPPINES · <span class="bb" lang="tl-Tglg" title="siklab" aria-hidden="true">ᜐᜒᜃ᜔ᜎᜊ᜔</span></p>
+  <p class="micro" id="mode-readout">MODEL: KR-26 / MODE: A·PULA / ARAW / 90%</p>
 </footer>
+</div>
 
+<div class="toasts" aria-live="polite"></div>
+<script src="assets/js/site.js" defer></script>
 </body>
 </html>

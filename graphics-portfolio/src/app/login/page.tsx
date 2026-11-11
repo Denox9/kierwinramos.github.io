@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import Bb from "@/components/Bb";
+import BbCols from "@/components/BbCols";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,26 +26,42 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="login">
-      <form className="panel" onSubmit={onSubmit} noValidate>
-        <div className="panel__bar label"><span>ACCESS // <Bb text="patunay" /></span><span>SECURITY PROTOCOL ACTIVE</span></div>
-        <div className="panel__body">
-          <h1 className="panel__title">CONTROL<br />PANEL</h1>
+    <section className="auth">
+      <div className="auth-art" aria-hidden="true">
+        <div className="t-block" />
+        <div className="p-block" />
+        <div className="s-block stripes" />
+        <BbCols lines={["pasok", "tuloy po kayo"]} className="art-cols" />
+        <div className="row" style={{ justifyContent: "space-between" }}>
+          <span className="label">ACCESS // <Bb text="patunay" /></span>
+          <span className="micro">SECURITY PROTOCOL ACTIVE</span>
+        </div>
+        <div>
+          <div className="pager-mini" style={{ marginBottom: "1rem" }}><span className="red">02</span><i /><span>05</span></div>
+          <p className="big">Pasok<span className="red">.</span></p>
+        </div>
+      </div>
+      <div className="auth-panel">
+        <div>
+          <span className="mark" aria-hidden="true" />
+          <h1 className="mega" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginTop: "0.75rem" }}>Control <span className="soft">panel</span></h1>
+          <p className="micro" style={{ marginTop: "0.625rem" }}>AUTHORIZED OPERATORS ONLY — PARA SA AWTORISADO LAMANG</p>
+        </div>
+        <form className="auth-form" onSubmit={onSubmit} noValidate>
           <label className="field">
-            <span className="label">OPERATOR EMAIL</span>
+            <span className="micro">Operator email</span>
             <input className="input" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
           </label>
           <label className="field">
-            <span className="label">PASSKEY</span>
+            <span className="micro">Passkey</span>
             <input className="input" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
           </label>
-          {err && <p className="alert" role="alert">! {err}</p>}
-          <button className="btn btn--accent btn--block" type="submit" disabled={busy}>
-            {busy ? "AUTHENTICATING…" : "ENTER >>>"}
+          {err && <p className="err" role="alert">! {err}</p>}
+          <button className="btn red block" type="submit" disabled={busy}>
+            <span>{busy ? "Authenticating…" : "Sign in"}</span><span aria-hidden="true">→</span>
           </button>
-        </div>
-        <div className="hazard hazard--thin" aria-hidden="true" />
-      </form>
+        </form>
+      </div>
     </section>
   );
 }

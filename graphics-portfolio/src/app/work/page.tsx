@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import WorkFilter from "@/components/WorkFilter";
+import SecHead from "@/components/SecHead";
 import { getPublishedProjects } from "@/lib/data";
-import Bb from "@/components/Bb";
 
 export const metadata: Metadata = { title: "Work" };
 
@@ -11,12 +11,8 @@ export default async function WorkPage({ searchParams }: Props) {
   const { cat } = await searchParams;
   const projects = await getPublishedProjects();
   return (
-    <section className="section">
-      <header className="page-head">
-        <span className="label">// DESIGN ARCHIVE — <Bb text="talaan nang likha" bold /></span>
-        <h1 className="page-head__title">WORK<span className="accent">.</span></h1>
-        <p className="label">PRESENTATIONS / LOGOS / INFOGRAPHICS / SYSTEMS</p>
-      </header>
+    <section className="sec">
+      <SecHead idx="02" soft="The" title="Work" side="talaan ng likha" meta="PRESENTATIONS · LOGOS · INFOGRAPHICS · SYSTEMS" ghost="likha" as="h1" />
       <WorkFilter projects={projects} initial={cat ?? "all"} />
     </section>
   );

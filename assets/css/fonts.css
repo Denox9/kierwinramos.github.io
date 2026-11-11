@@ -1,0 +1,4 @@
+/* SKB Baybayin — angular derivative of Noto Sans Tagalog (SIL OFL 1.1).
+   unicode-range scopes it to the Baybayin block only. Latin fonts load from Google Fonts. */
+@font-face{font-family:"SKB Baybayin";src:url("../fonts/skb-baybayin-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}
+@font-face{font-family:"SKB Baybayin";src:url("../fonts/skb-baybayin-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}

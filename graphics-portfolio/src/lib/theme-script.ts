@@ -1,2 +1,3 @@
-// Inlined in <head> so the correct theme is applied before first paint (no flash).
-export const THEME_SCRIPT = `(function(){try{var d=document.documentElement;var s=localStorage.getItem("rx-theme");var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;d.dataset.theme=s||(m?"dark":"light");}catch(e){document.documentElement.dataset.theme="light";}})();`;
+// Inlined in <head> so theme, accent mode and UI scale apply before first paint (no flash).
+// rx-theme: light | dark   ·   rx-accent: pula | mono   ·   rx-scale: 90 | 100
+export const THEME_SCRIPT = `(function(){var d=document.documentElement;try{var s=localStorage.getItem("rx-theme");var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;d.dataset.theme=s||(m?"dark":"light");d.dataset.accent=localStorage.getItem("rx-accent")||"pula";d.dataset.scale=localStorage.getItem("rx-scale")||"90";}catch(e){d.dataset.theme="light";d.dataset.accent="pula";d.dataset.scale="90";}})();`;

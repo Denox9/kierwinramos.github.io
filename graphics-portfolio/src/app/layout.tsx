@@ -1,14 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Rubik_Mono_One, Space_Grotesk, Space_Mono } from "next/font/google";
+import { Archivo, Inter_Tight, Space_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { site } from "@/lib/site";
 import { THEME_SCRIPT } from "@/lib/theme-script";
 import "./globals.css";
 
-const display = Rubik_Mono_One({ weight: "400", subsets: ["latin"], variable: "--ff-display", display: "swap" });
+// Siklab/68 type system: Inter Tight (mega/body) · Archivo wdth 62–125 (wide + condensed) · Space Mono (labels)
+const grot = Inter_Tight({ subsets: ["latin"], weight: ["200", "300", "400", "500", "600", "700", "800"], variable: "--ff-grot", display: "swap" });
+const wide = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--ff-wide", display: "swap" });
 const mono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], variable: "--ff-mono", display: "swap" });
-const sans = Space_Grotesk({ subsets: ["latin"], variable: "--ff-sans", display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: `${site.name} — Design Archive`, template: `%s // ${site.name}` },
@@ -17,16 +18,16 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F2F2F2" },
-    { media: "(prefers-color-scheme: dark)", color: "#0D0E0F" },
+    { media: "(prefers-color-scheme: light)", color: "#F2F0EB" },
+    { media: "(prefers-color-scheme: dark)", color: "#121211" },
   ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${mono.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${grot.variable} ${wide.variable} ${mono.variable}`} data-scale="90" suppressHydrationWarning>
       <head>
-        {/* Applies saved / OS theme before first paint */}
+        {/* Applies saved / OS theme, accent mode and 90% / 100% scale before first paint */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <link rel="preload" href="/fonts/rx09-baybayin-700.woff2" as="font" type="font/woff2" crossOrigin="" />
       </head>

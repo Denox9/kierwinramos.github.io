@@ -7,18 +7,18 @@ export default function ProjectCard({ project, index }: { project: Project; inde
   const cat = getCategory(project.category);
   return (
     <Link href={`/work/${encodeURIComponent(project.code)}`} className="card">
-      <div className="card__bar label">
-        <span>{displayCode(project.code)}</span>
-        <span>{index !== undefined ? `#${String(index + 1).padStart(2, "0")}` : cat.short}</span>
+      <div className="card__bar">
+        <span className="label">{displayCode(project.code)}</span>
+        <span className="micro">{index !== undefined ? `S-${String(index + 1).padStart(2, "0")}` : cat.short}</span>
       </div>
       <div className="card__media">
         <Cover project={project} />
-        {project.featured && <span className="card__flag label">[X] FEATURED</span>}
+        {project.featured && <span className="card__flag label">Featured</span>}
       </div>
       <div className="card__body">
         <h3 className="card__title">{project.title}</h3>
-        <p className="label card__meta">
-          {cat.label} / {project.year ?? "—"} <span className="card__go">&gt;&gt;&gt;</span>
+        <p className="micro card__meta">
+          <span>{cat.label} / {project.year ?? "—"}</span> <span className="card__go">↗</span>
         </p>
       </div>
     </Link>
