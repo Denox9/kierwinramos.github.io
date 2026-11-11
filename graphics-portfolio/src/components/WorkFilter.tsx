@@ -28,23 +28,23 @@ export default function WorkFilter({ projects, initial }: { projects: Project[];
         {options.map((o) => {
           const n = o.id === "all" ? projects.length : projects.filter((p) => p.category === o.id).length;
           return (
-            <button key={o.id} type="button" className="chip" aria-pressed={active === o.id} onClick={() => select(o.id)}>
-              [{o.short}] <span className="chip__n">{String(n).padStart(2, "0")}</span>
+            <button key={o.id} type="button" className="filter" aria-pressed={active === o.id} onClick={() => select(o.id)}>
+              {o.short} <span className="chip__n">{String(n).padStart(2, "0")}</span>
             </button>
           );
         })}
-        <p className="label filters__count" aria-live="polite">
+        <p className="micro filters__count" aria-live="polite">
           SHOWING {String(shown.length).padStart(3, "0")} / {String(projects.length).padStart(3, "0")}
         </p>
       </div>
       {shown.length ? (
-        <div className="grid-cards">
+        <div className="grid-cards" style={{ borderTop: 0 }}>
           {shown.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
         </div>
       ) : (
         <div className="empty">
           <span className="warn-tri" aria-hidden="true">!</span>
-          <p className="label">NO MODULES IN THIS CATEGORY // <Bb text="wala pa" /></p>
+          <p className="label">NO WORK IN THIS CATEGORY YET // <Bb text="wala pa" /></p>
         </div>
       )}
     </>
